@@ -8,7 +8,7 @@ Giving the URL of an existing metadata image, this tool extract the list of imag
 The metadata image is patched to point to the new registry, rebuilt and published there as well.
 
 ## Usage
-```bash
+```
 ./mirror_csv_release.sh --help
 
 Usage:
@@ -52,7 +52,7 @@ Example:
 
 ## Requirements
 To be installed on the bastion host used for the mirroring process:
-[Podman](https://github.com/containers/libpod)
-[Skopeo](https://github.com/containers/skopeo)
-[yq](https://github.com/kislyuk/yq)
++ [Podman](https://github.com/containers/libpod)
++ [Skopeo](https://github.com/containers/skopeo)
++ [yq](https://github.com/kislyuk/yq)
 
