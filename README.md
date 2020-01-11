@@ -1,10 +1,10 @@
 # mirror-csv-release
-helper script to mirror an operator based application to a different repository
+A helper script to mirror an operator-based application to a different repository.
 
-Operator based applications comes with a metadata image shipping its [CSV](https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/design/building-your-csv.md#what-is-a-cluster-service-version-csv) file for OLM.
+Operator-based applications come with a metadata image shipping its [CSV](https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/design/building-your-csv.md#what-is-a-cluster-service-version-csv) file for [OLM](https://docs.openshift.com/container-platform/4.2/operators/understanding-olm/olm-understanding-olm.html#olm-overview_olm-understanding-olm).
 
 This script assumes that the metadata image is based on [the operator registry image](https://github.com/operator-framework/operator-registry).
-Giving the URL of an existing metadata image, this tool extract the list of images listed in the CSV (the CSV should provide the list of [all the needed images](https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/contributors/design-proposals/related-images.md)) and mirror all of them do a different repository.
+Giving the URL of an existing metadata image, this tool extracts the list of images listed in the CSV (the CSV should provide the list of [all the needed images](https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/contributors/design-proposals/related-images.md)) and mirrors all of them to a different repository.
 The metadata image is patched to point to the new registry, rebuilt and published there as well.
 
 ## Usage
