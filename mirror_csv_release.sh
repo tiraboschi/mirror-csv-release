@@ -171,7 +171,7 @@ mirror() {
 build_and_publish_patched_bundle_image() {
     local bundle_image="${1:?}"
     local dest_prefix="${2:?}"
-    local source_registry=${source_image}/
+    local source_registry=${source_image%\/*}/
     local dest_image=$(get_dest_image "${bundle_image}" "${dest_prefix}")
     local dry_run
     [[ "$DRY_RUN" ]] && dry_run=echo
@@ -179,7 +179,7 @@ build_and_publish_patched_bundle_image() {
     cp Dockerfile ${tmp_dir}
     echo -e "\e[41mRecreating bundle registry image\e[49m"
     podman build --build-arg PARENT_IMAGE="${bundle_image}" \
-       --build-arg SOURCE="${source_registry#\"}" \
+       --build-arg SOURCE="${source_registry}" \
        --build-arg DESTINATION="${dest_prefix}"  ${tmp_dir} -t "${dest_image}"
     bash -c "$dry_run podman push ${dest_image}"
 }
