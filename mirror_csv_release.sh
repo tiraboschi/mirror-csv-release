@@ -132,7 +132,7 @@ get_csv_files() {
 get_source_images() {
     local source_images=()
     for csv in "$@"; do
-        source_images+=$(cat "${csv}"  | yq --raw-output .spec.relatedImages[].image )
+        source_images+=$(cat "${csv}"  | python3 -c 'import yaml,sys;obj=yaml.safe_load(sys.stdin);print("\n".join([x["image"] for x in obj["spec"]["relatedImages"]]))' )
     done
     # Remove duplicate images
     printf '%s\n' "${source_images[@]}" | sort -u

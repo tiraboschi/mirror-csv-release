@@ -54,5 +54,7 @@ Example:
 To be installed on the bastion host used for the mirroring process:
 + [Podman](https://github.com/containers/libpod)
 + [Skopeo](https://github.com/containers/skopeo)
-+ [yq](https://github.com/kislyuk/yq)
++ Python3
 
+On RHEL8/Centos8/Fedora systems you can install them with:
+`sudo dnf install podman skopeo python3`
