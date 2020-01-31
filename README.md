@@ -53,7 +53,7 @@ Example:
 ## Requirements
 To be installed on the bastion host used for the mirroring process:
 + [Podman](https://github.com/containers/libpod)
-+ [Skopeo](https://github.com/containers/skopeo)
++ [Skopeo >= 0.1.40](https://github.com/containers/skopeo)
 + Python3
 
 On RHEL8/Centos8/Fedora systems you can install them with:

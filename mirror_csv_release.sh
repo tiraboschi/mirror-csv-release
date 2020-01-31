@@ -163,7 +163,7 @@ mirror() {
     for source_image in "$@"; do
         dest_image=$(get_dest_image "${source_image}" "${dest_prefix}")
         echo -e "\e[41mMirroring ${source_image} -> ${dest_image}\e[49m"
-        bash -c "$dry_run skopeo copy $dest_secret docker://${source_image} docker://${dest_image}"
+        bash -c "$dry_run skopeo copy --all $dest_secret docker://${source_image} docker://${dest_image}"
     done
 
 }
