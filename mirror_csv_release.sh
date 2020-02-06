@@ -170,7 +170,13 @@ mirror() {
         fi
         dest_image=$(get_dest_image "${source_image}" "${dest_prefix}")
         echo -e "\e[41mMirroring ${source_image} -> ${dest_image}\e[49m"
-        bash -c "$dry_run skopeo copy $all $dest_secret docker://${source_image} docker://${dest_image}"
+        local n=0
+        until [[ $n -ge 5 ]]
+        do
+           bash -c "$dry_run skopeo copy $all $dest_secret docker://${source_image} docker://${dest_image}" && break
+           n=$[$n+1]
+           sleep 15
+        done
     done
 
 }
