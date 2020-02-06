@@ -144,7 +144,9 @@ get_dest_image() {
     local dest_prefix="${2:?}"
     local source_registry=${source_image%\/*}/
     local image_name_tag=${source_image:${#source_registry}}
-    echo "${dest_prefix}${image_name_tag}"
+    # workaround for https://bugzilla.redhat.com/1794040
+    local image_name_tag_nosha=${image_name_tag/@sha256/}
+    echo "${dest_prefix}${image_name_tag_nosha}"
 }
 
 mirror() {
@@ -156,14 +158,19 @@ mirror() {
     local source_images=("$@")
     local dry_run
     local dest_image
+    local all
 
     [[ "$DRY_RUN" ]] && dry_run=echo
     [[ "$dest_secret" ]] && dest_secret="--dest-creds $dest_secret"
 
     for source_image in "$@"; do
+        all=""
+        if [[ ${source_image} == *"@sha256"* ]]; then
+          all="--all"
+        fi
         dest_image=$(get_dest_image "${source_image}" "${dest_prefix}")
         echo -e "\e[41mMirroring ${source_image} -> ${dest_image}\e[49m"
-        bash -c "$dry_run skopeo copy --all $dest_secret docker://${source_image} docker://${dest_image}"
+        bash -c "$dry_run skopeo copy $all $dest_secret docker://${source_image} docker://${dest_image}"
     done
 
 }
