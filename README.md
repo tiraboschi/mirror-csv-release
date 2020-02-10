@@ -14,16 +14,18 @@ The metadata image is patched to point to the new registry, rebuilt and publishe
 Usage:
 
 mirror_csv_release.sh [options] SOURCE_BUNDLE_REGISTRY DEST_PREFIX
+mirror_csv_release.sh [options] --appregistry DEST_PREFIX
 
 Mirror container images listed in an operator bundle.
 
 Positional arguments:
-    SOURCE_BUNDLE_REGISTRY
+    [SOURCE_BUNDLE_REGISTRY]
         Will be used for:
           - Extract bundle files
           - Get the list of images listed in the bundle
           - Replacement string when replace the source registry and namespace
             with the destination registry and namespace.
+        SOURCE_BUNDLE_REGISTRY should be omitted when fetching the content directly from an appregistry (--appregistry)
 
         [e.g quay.io/openshift-cnv/container-native-virtualization-hco-bundle-registry:v2.2.0-181]
 
@@ -34,11 +36,14 @@ Positional arguments:
        [e.g quay.io/tiraboschi/]
 
 Optional arguments:
-    -s,--dest-secret USERNAME[:PASSWORD]
+    --dest-secret USERNAME[:PASSWORD]
         for accessing the destination registry
 
     --version-filter
         to mirror just a specific version
+
+    --appregistry
+        to fetch the source CSVs from the specified appregistry instead of a bundle image
 
     -d,--debug
         run in debug mode
@@ -46,8 +51,33 @@ Optional arguments:
     --dry-run
         dry-run mode
 
+    --baseurl
+        appregistry API baseurl, used only in appregistry mode
+        default: https://quay.io/cnr
+
+    --appregistry-name
+        appregistry name, used only in appregistry mode
+        default: redhat-operators
+
+    --package-name)
+        package name, used only in appregistry mode
+        default: kubevirt-hyperconverged
+
+    --packageversion
+        package version, used only in appregistry mode
+        default: 1.0.0
+
+    --bundle-registry-name
+        name of the destination bundle registry image, used only in appregistry mode
+        default: bundle-registry
+
+    --bundle-registry-tag
+        tag of the destination bundle registry image, used only in appregistry mode
+        default: 1.0.0
+
 Example:
-    mirror_csv_release.sh  --version-filter 2.2.0 quay.io/openshift-cnv/container-native-virtualization-hco-bundle-registry:v2.2.0-181  quay.io/tiraboschi/
+    mirror_csv_release.sh  --version-filter 2.2.0 quay.io/openshift-cnv/container-native-virtualization-hco-bundle-registry:v2.2.0-181 quay.io/tiraboschi/
+    mirror_csv_release.sh  --appregistry --version-filter 2.2.0 --packageversion 4.0.0 --bundle-registry-name my-bundle-registry --bundle-registry-tag 1.0.0 quay.io/tiraboschi/
 ```
 
 ## Requirements
