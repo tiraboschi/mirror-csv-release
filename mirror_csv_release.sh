@@ -312,11 +312,9 @@ build_and_publish_patched_bundle_image_appregistry() {
     local bundle_registry_name="${3:?}"
     local bundle_registry_tag="${4:?}"
     local source_registry=${source_image%\/*}/
-    local dest_image=$(get_dest_image "${bundle_image}" "${dest_prefix}")
+    local dest_image=${dest_prefix}${bundle_registry_name}:${bundle_registry_tag}
     local dry_run
     [[ "$DRY_RUN" ]] && dry_run=echo
-
-    dest_image=${dest_prefix}${bundle_registry_name}:${bundle_registry_tag}
 
     mv "$(find ${tmp_dir}/manifests -maxdepth 1 -mindepth 1 -type d)" ${tmp_dir}/patched_manifests
     find ${tmp_dir}/patched_manifests -name *clusterserviceversion* \
